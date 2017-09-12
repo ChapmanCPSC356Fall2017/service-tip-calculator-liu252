@@ -421,6 +421,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (!tipMode)
                 {
+                    instruction.setText("Enter Prices");
                     numberText.setText("0");
                 }
             }
@@ -500,51 +501,58 @@ public class MainActivity extends AppCompatActivity {
                 double numbers[] = new double[50];
                 char symbols[] = new char[50];
                 double calculate = 0.0;
-                if(!tipMode) {
+                if(!tipMode)
+                {
                     String stringForm = numberText.getText().toString();
-                    for (int x = 0; x < stringForm.length(); x++) {
-                        if (stringForm.charAt(x) == '+' || stringForm.charAt(x) == '-') {
-                            numbers[num] = Double.parseDouble(stringForm.substring(start, x));
-                            start = x + 1;
-                            num++;
-                            if (stringForm.charAt(x) == '+') {
-                                symbols[sym] = '+';
-                                sym++;
-                            } else if (stringForm.charAt(x) == '-') {
-                                symbols[sym] = '-';
-                                sym++;
+                    if(!stringForm.substring((stringForm.length()-1)).equals("+"))
+                    {
+                        for (int x = 0; x < stringForm.length(); x++) {
+                            if (stringForm.charAt(x) == '+' || stringForm.charAt(x) == '-') {
+                                numbers[num] = Double.parseDouble(stringForm.substring(start, x));
+                                start = x + 1;
+                                num++;
+                                if (stringForm.charAt(x) == '+') {
+                                    symbols[sym] = '+';
+                                    sym++;
+                                } else if (stringForm.charAt(x) == '-') {
+                                    symbols[sym] = '-';
+                                    sym++;
+                                }
+                            }
+                            if (x == stringForm.length() - 1) {
+                                numbers[num] = Double.parseDouble(stringForm.substring(start));
+                                num++;
                             }
                         }
-                        if (x == stringForm.length() - 1) {
-                            numbers[num] = Double.parseDouble(stringForm.substring(start));
-                            num++;
-                        }
-                    }
-                    for (int x = 0; x < (num + 1); x++) {
+                        for (int x = 0; x < (num + 1); x++) {
 
-                        if (sym == 0) {
-                            calculate = Double.parseDouble(stringForm);
-                        } else if (x == 0) {
-                            calculate = numbers[x];
-                        } else if (x > 0) {
-                            if (symbols[symCount] == '+') {
-                                calculate = calculate + numbers[x];
-                                symCount++;
-                            } else if (symbols[symCount] == '-') {
-                                calculate = calculate - numbers[x];
-                                symCount++;
+                            if (sym == 0) {
+                                calculate = Double.parseDouble(stringForm);
+                            } else if (x == 0) {
+                                calculate = numbers[x];
+                            } else if (x > 0) {
+                                if (symbols[symCount] == '+') {
+                                    calculate = calculate + numbers[x];
+                                    symCount++;
+                                } else if (symbols[symCount] == '-') {
+                                    calculate = calculate - numbers[x];
+                                    symCount++;
+                                }
                             }
                         }
+                        stringForm = Double.toString(calculate);
+                        numberText.setText(stringForm);
+                        symCount = 0;
+                        num = 0;
+                        sym = 0;
+                        String tipMessage = "Enter Service Rating \nFrom 1 - 10";
+                        instruction.setText(tipMessage);
+                        tipMode = true;
                     }
-                    stringForm = Double.toString(calculate);
-                    numberText.setText(stringForm);
-                    symCount = 0;
-                    num = 0;
-                    sym = 0;
+
+
                 }
-                String tipMessage = "Enter Service Rating \nFrom 1 - 10";
-                instruction.setText(tipMessage);
-                tipMode = true;
+
 
             }
         });
@@ -564,60 +572,47 @@ public class MainActivity extends AppCompatActivity {
                 if(!tipMode)
                 {
                     String stringForm = numberText.getText().toString();
-                    for(int x = 0; x < stringForm.length(); x++)
-                    {
-                        if(stringForm.charAt(x) == '+' || stringForm.charAt(x) == '-')
-                        {
-                            numbers[num] = Double.parseDouble(stringForm.substring(start,x));
-                            start = x+1;
-                            num++;
-                            if(stringForm.charAt(x) == '+')
-                            {
-                                symbols[sym] = '+';
-                                sym++;
+                    if(!stringForm.substring((stringForm.length()-1)).equals("+")) {
+                        for (int x = 0; x < stringForm.length(); x++) {
+                            if (stringForm.charAt(x) == '+' || stringForm.charAt(x) == '-') {
+                                numbers[num] = Double.parseDouble(stringForm.substring(start, x));
+                                start = x + 1;
+                                num++;
+                                if (stringForm.charAt(x) == '+') {
+                                    symbols[sym] = '+';
+                                    sym++;
+                                } else if (stringForm.charAt(x) == '-') {
+                                    symbols[sym] = '-';
+                                    sym++;
+                                }
                             }
-                            else if(stringForm.charAt(x) == '-')
-                            {
-                                symbols[sym] = '-';
-                                sym++;
+                            if (x == stringForm.length() - 1) {
+                                numbers[num] = Double.parseDouble(stringForm.substring(start));
+                                num++;
                             }
                         }
-                        if(x == stringForm.length()-1)
-                        {
-                            numbers[num] = Double.parseDouble(stringForm.substring(start));
-                            num++;
-                        }
-                    }
-                    for(int x = 0; x < (num + 1); x++)
-                    {
+                        for (int x = 0; x < (num + 1); x++) {
 
-                        if(sym == 0)
-                        {
-                            calculate = Double.parseDouble(stringForm);
-                        }
-                        else if (x == 0)
-                        {
-                            calculate = numbers[x];
-                        }
-                        else if (x > 0)
-                        {
-                            if(symbols[symCount] == '+')
-                            {
-                                calculate = calculate + numbers[x];
-                                symCount++;
-                            }
-                            else if (symbols[symCount] == '-')
-                            {
-                                calculate = calculate - numbers[x];
-                                symCount++;
+                            if (sym == 0) {
+                                calculate = Double.parseDouble(stringForm);
+                            } else if (x == 0) {
+                                calculate = numbers[x];
+                            } else if (x > 0) {
+                                if (symbols[symCount] == '+') {
+                                    calculate = calculate + numbers[x];
+                                    symCount++;
+                                } else if (symbols[symCount] == '-') {
+                                    calculate = calculate - numbers[x];
+                                    symCount++;
+                                }
                             }
                         }
+                        stringForm = Double.toString(calculate);
+                        numberText.setText(stringForm);
+                        symCount = 0;
+                        num = 0;
+                        sym = 0;
                     }
-                    stringForm = Double.toString(calculate);
-                    numberText.setText(stringForm);
-                    symCount = 0;
-                    num = 0;
-                    sym = 0;
                 }
                 else if (tipMode)
                 {
@@ -646,6 +641,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     numberText.setText(Double.toString(afterTip));
                     instruction.setText("Total");
+                    tipMode = false;
 
                 }
             }
