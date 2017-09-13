@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Boolean usedDecimal = false;
     private Boolean tipMode = false;
-    private String rating = "";
+    private String rating = "0";
     private int ratingCount = 0;
 
     @Override
@@ -418,11 +418,15 @@ public class MainActivity extends AppCompatActivity {
                     instruction.setText("Enter Prices");
                     numberText.setText("0");
                     tipMode = false;
+                    usedDecimal = false;
+                    rating = "0";
+                    ratingCount = 0;
                 }
                 else if (!tipMode)
                 {
                     instruction.setText("Enter Prices");
                     numberText.setText("0");
+                    usedDecimal = false;
                 }
             }
         });
@@ -503,6 +507,8 @@ public class MainActivity extends AppCompatActivity {
                 double calculate = 0.0;
                 if(!tipMode)
                 {
+                    rating = "0";
+                    ratingCount = 0;
                     String stringForm = numberText.getText().toString();
                     if(!stringForm.substring((stringForm.length()-1)).equals("+"))
                     {
@@ -540,6 +546,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                         }
+                        usedDecimal = false;
                         stringForm = Double.toString(calculate);
                         numberText.setText(stringForm);
                         symCount = 0;
@@ -619,7 +626,11 @@ public class MainActivity extends AppCompatActivity {
                     double amountBeforeTip = Double.parseDouble(numberText.getText().toString());
                     double afterTip = 0;
                     int ratingTransfer = Integer.parseInt(rating);
-                    if (ratingTransfer >= 1 && ratingTransfer <= 3)
+                    if (ratingTransfer == 0)
+                    {
+                        afterTip = amountBeforeTip * 1;
+                    }
+                    else if (ratingTransfer >= 1 && ratingTransfer <= 3)
                     {
                         afterTip = amountBeforeTip * 1.10;
                     }
@@ -642,6 +653,7 @@ public class MainActivity extends AppCompatActivity {
                     numberText.setText(Double.toString(afterTip));
                     instruction.setText("Total");
                     tipMode = false;
+                    rating = "0";
 
                 }
             }
